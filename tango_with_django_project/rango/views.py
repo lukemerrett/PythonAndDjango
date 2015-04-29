@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from rango.models import Category
 
 def index(request):
-    model = {'boldmessage': "I am bold font from the context"}
-    return render(request, 'rango/index.html', model)
+    category_list = Category.objects.order_by('-likes')[:5]
+    context_dict = {'categories': category_list}
+
+    return render(request, 'rango/index.html', context_dict)
